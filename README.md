@@ -28,7 +28,7 @@ Grocery store, billing app
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/dyte-submissions/november-2023-hiring-Shashank5665.git
+   git clone https://github.com/Shashank5665/Billing-app.git
    ```
 2. Go to backend folder and install NPM packages
    ```sh
