@@ -1,0 +1,10 @@
+.billingProducts {
+  /* border: 1px solid black; */
+  width: 100%;
+}
+
+.innerBill {
+  /* border: 1px solid red; */
+  justify-content: space-between;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}

@@ -1,0 +1,9 @@
+* {
+  font-family: "poppins light";
+}
+
+.productContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* border: 1px solid black; */
+}
