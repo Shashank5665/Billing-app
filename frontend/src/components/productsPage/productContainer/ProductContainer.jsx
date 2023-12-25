@@ -1,26 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./productContainer.css";
 import Product from "../product/Product";
-import { useMyContext } from "../../../context/MyProvider";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProducts } from "../../../features/productSlice";
 
 const ProductContainer = () => {
-  const { products } = useMyContext();
+  const dispatch = useDispatch();
+  const { search, products } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
   return (
     <div className="productContainer">
-      {products && products.length > 0 ? (
-        products.map((product) => (
-          <Product
-            key={product._id}
-            id={product._id}
-            name={product.name}
-            price={product.price}
-            gst={product.gst}
-          />
-        ))
+      {products ? (
+        products
+          .filter((product) => {
+            return search.toLowerCase() === ""
+              ? product
+              : product.name.toLowerCase().includes(search.toLowerCase());
+          })
+          .map((product) => (
+            <Product
+              key={product._id}
+              id={product._id}
+              name={product.name}
+              price={product.price}
+              gst={product.gst}
+            />
+          ))
       ) : (
-        <div className="noProducts">
-          <h1>No Products Found</h1>
-        </div>
+        <h1>Loading...</h1>
       )}
     </div>
   );

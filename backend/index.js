@@ -3,7 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const productRoute = require("./routes/productRoute");
-const cartRoute = require("./routes/cartRoute");
+const cartItemRoute = require("./routes/cartItemRoute");
 
 dotenv.config();
 connectDB();
@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/products", productRoute);
-app.use("/cart", cartRoute);
+app.use("/cartItems", cartItemRoute);
 
 app.listen(process.env.PORT, () => {
-  console.log(`Billing app's server is running on port ${process.env.PORT}...`);
+  console.log(`server is running on http://localhost:${process.env.PORT}`);
 });

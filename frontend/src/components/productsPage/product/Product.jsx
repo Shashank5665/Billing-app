@@ -1,34 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Button, ButtonGroup, Heading } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
-import { FaCartPlus } from "react-icons/fa";
+import { FaCartShopping } from "react-icons/fa6";
+import { FaRegTrashAlt } from "react-icons/fa";
 import EditProduct from "../../productsPage/modal/EditProduct";
-import { useMyContext } from "../../../context/MyProvider";
-import { useNavigate } from "react-router-dom";
-const { updateProduct, addToCart, getCart } = require("../../../apis/index");
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../../../features/productSlice";
+import { addCartItem } from "../../../features/cartSlice";
 
 const Product = ({ id, name, price, gst }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const handleEditOpen = () => setIsEditOpen(true);
-  const { products, setProducts, cart, setCart } = useMyContext();
-  const navigate = useNavigate();
-
-  const handleUpdate = async (updatedProduct) => {
-    await updateProduct(id, updatedProduct);
-    const index = products.findIndex((product) => product._id === id);
-    const newProducts = [...products];
-    newProducts[index] = updatedProduct;
-    setProducts(newProducts);
-    setIsEditOpen(false);
+  const dispatch = useDispatch();
+  const handleEditOpen = () => {
+    setIsEditOpen(true);
   };
 
   const handleAddToCart = async (id) => {
-    const cartDataParams = {
-      productId: id,
-      quantity: 1,
-    };
-    const addedData = await addToCart(id, cartDataParams);
-    navigate("/billing");
+    const payload = { productId: id };
+    dispatch(addCartItem(payload));
+  };
+
+  const handleDelete = async (id) => {
+    dispatch(deleteProduct(id));
   };
 
   return (
@@ -37,46 +30,55 @@ const Product = ({ id, name, price, gst }) => {
         <Heading fontFamily="poppins light">{name}</Heading>
         <Box className="numbers">
           <Heading size="md" fontFamily="poppins light" m="1em 0 1em 0">
-            $ {price}{" "}
+            $ {price}
           </Heading>
           <Heading size="md" fontFamily="poppins light">
-            GST : {gst}%{" "}
+            GST : {gst}%
           </Heading>
         </Box>
         <ButtonGroup>
           <Button
             colorScheme="blue"
-            p="0 2em 0 2em"
-            m="1em 0 1em 0"
+            m="1.5em 0.5em 1.5em 0.5em"
             onClick={handleEditOpen}
-            borderRadius="25px"
-            width="7em"
+            borderRadius="20px"
             boxShadow="md"
+            p="0 1em 0 1em"
           >
             <FaEdit fontSize="1.3em" />
             Edit
           </Button>
           <Button
             colorScheme="green"
-            m="1em 0 1em 0"
+            m="1.5em 0.5em 1.5em 0.5em"
             onClick={() => handleAddToCart(id)}
-            borderRadius="25px"
-            width="7em"
+            borderRadius="20px"
             boxShadow="md"
+            p="0 1em 0 1em"
           >
-            <FaCartPlus fontSize="1.3em" />
+            <FaCartShopping fontSize="1.3em" />
             Add
+          </Button>
+          <Button
+            colorScheme="red"
+            m="1.5em 0.5em 1.5em 0.5em"
+            onClick={() => handleDelete(id)}
+            borderRadius="20px"
+            boxShadow="md"
+            p="0"
+          >
+            <FaRegTrashAlt fontSize="1.3em" />
           </Button>
         </ButtonGroup>
       </Box>
       {isEditOpen && (
         <EditProduct
+          id={id}
           isOpen={isEditOpen}
           onClose={() => setIsEditOpen(false)}
           initialName={name}
           initialPrice={price}
           initialGst={gst}
-          onUpdate={handleUpdate}
         />
       )}
     </Box>

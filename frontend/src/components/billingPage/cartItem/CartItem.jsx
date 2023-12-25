@@ -1,76 +1,85 @@
-import React, { useState, useEffect } from "react";
-import { Box, IconButton, Input, Flex, Text, Grid } from "@chakra-ui/react";
-import { MdRemove, MdAdd } from "react-icons/md";
-import { useMyContext } from "../../../context/MyProvider";
+import React, { useState, useEffect, useRef } from "react";
+import { Flex, Text, Grid, Button } from "@chakra-ui/react";
+import { FaRegTrashAlt } from "react-icons/fa";
 import "./cartItem.css";
-import { getCart, updateCart, updateProduct } from "../../../apis";
+import { useDispatch } from "react-redux";
+import { deleteCartItems, updateCartItem } from "../../../features/cartSlice";
+import { calculateNumbers } from "../../../features/cartSlice";
 
-const CartItem = ({ id, name, price, gst, quantity, productId }) => {
+//----------------------------------------------------------------------------------------------------
+
+const CartItem = ({ id, name, price, gst, quantity }) => {
   const [localQuantity, setLocalQuantity] = useState(quantity);
-  const { cart, setCart, total, setTotal } = useMyContext();
+  const dispatch = useDispatch();
+  const quantityRef = useRef();
 
-  const handleIncrement = async (productId) => {
-    const cartDataParams = {
-      productId: productId,
-      quantity: localQuantity + 1,
-    };
-    const updatedData = await updateCart(productId, cartDataParams);
+  const increment = () => {
     setLocalQuantity(localQuantity + 1);
   };
+  const decrement = () => {
+    if (localQuantity > 1) {
+      setLocalQuantity(localQuantity - 1);
+    }
+  };
 
-  const handleDecrement = async (productId) => {
-    const cartDataParams = {
-      productId: productId,
-      quantity: localQuantity - 1,
-    };
-    const updatedData = await updateCart(productId, cartDataParams);
-    setLocalQuantity(localQuantity - 1);
+  const deleteCartItem = (id) => {
+    dispatch(deleteCartItems(id));
   };
 
   useEffect(() => {
-    calculateTotal();
-  }, []);
+    dispatch(updateCartItem({ id, quantity: quantityRef.current.innerText }));
+  }, [localQuantity]);
+  useEffect(() => {
+    dispatch(calculateNumbers());
+  }, [localQuantity]);
 
-  const calculateTotal = () => {
-    let totalPrice = 0;
-    cart.forEach((item) => {
-      const itemTotal = calculateItemTotal(item);
-      totalPrice += itemTotal;
-    });
-    setTotal(totalPrice);
-  };
-  const calculateItemTotal = (item) => {
-    const itemPrice = item.product.price * item.quantity;
-    const itemGST = (item.product.gst / 100) * itemPrice;
-    const itemTotal = itemPrice + itemGST;
-    return itemTotal;
-  };
+  //----------------------------------------------------------------------------------------------------
 
   return (
-    <Flex justifyContent="center" gap="3em" className="billingProducts">
-      <Grid className="innerBill" w="60%">
+    <Flex
+      justifyContent="center"
+      alignItems="center"
+      gap="3em"
+      className="billingProducts"
+    >
+      <Grid
+        className="innerBill"
+        w="60%"
+        justifyContent="center"
+        alignItems="center"
+      >
         <Text>{name}</Text>
         <Text>$ {price}</Text>
         <Text>{gst}%</Text>
-        <Flex justifyContent="center">
-          <IconButton
+        <Flex justifyContent="center" alignItems="center">
+          <Button
             aria-label="Decrement"
-            icon={<MdRemove />}
-            onClick={() => handleDecrement(productId)}
-            borderRadius="25px"
+            onClick={() => decrement()}
+            borderRadius="10px 0 0 10px"
             m="0.1em 1em 0.1em 1em"
-            boxShadow="md"
-          />
-          <Text>{localQuantity}</Text>
-          <IconButton
+          >
+            -
+          </Button>
+          <Text w="2em" ref={quantityRef}>
+            {localQuantity}
+          </Text>
+          <Button
             aria-label="Increment"
-            icon={<MdAdd />}
-            onClick={() => handleIncrement(productId)}
-            borderRadius="25px"
+            onClick={() => increment()}
+            borderRadius="0 10px 10px 0"
             m="0.1em 1em 0.1em 1em"
-            boxShadow="md"
-          />
+          >
+            +
+          </Button>
         </Flex>
+        <Button
+          padding="0"
+          color="red"
+          backgroundColor="transparent"
+          onClick={() => deleteCartItem(id)}
+        >
+          <FaRegTrashAlt fontSize="1em" />
+        </Button>
       </Grid>
     </Flex>
   );

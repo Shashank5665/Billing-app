@@ -12,34 +12,24 @@ import {
   FormLabel,
   Input,
 } from "@chakra-ui/react";
-import { useMyContext } from "../../../context/MyProvider";
+import { useDispatch } from "react-redux";
+import { updateProduct } from "../../../features/productSlice";
 
 const EditProduct = ({
+  id,
   isOpen,
   onClose,
   initialName,
   initialPrice,
   initialGst,
-  onUpdate,
 }) => {
-  const {
-    name: contextName,
-    setName,
-    price: contextPrice,
-    setPrice,
-    gst: contextGst,
-    setGst,
-  } = useMyContext();
+  const dispatch = useDispatch();
   const [name, setLocalName] = useState(initialName);
   const [price, setLocalPrice] = useState(initialPrice);
   const [gst, setLocalGst] = useState(initialGst);
 
   const handleUpdate = () => {
-    onUpdate({
-      name: name || contextName,
-      price: price || contextPrice,
-      gst: gst || contextGst,
-    });
+    dispatch(updateProduct({ id, name, price, gst }));
     onClose();
   };
 
@@ -47,7 +37,7 @@ const EditProduct = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Edit Product</ModalHeader>
+        <ModalHeader>Update Product</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <FormControl>
@@ -75,7 +65,7 @@ const EditProduct = ({
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleUpdate}>
+          <Button colorScheme="blue" mr={3} onClick={() => handleUpdate(id)}>
             Update
           </Button>
           <Button variant="ghost" onClick={onClose}>
