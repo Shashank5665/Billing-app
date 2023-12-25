@@ -9,16 +9,25 @@ import { calculateNumbers } from "../../../features/cartSlice";
 //----------------------------------------------------------------------------------------------------
 
 const CartItem = ({ id, name, price, gst, quantity }) => {
-  const [localQuantity, setLocalQuantity] = useState(quantity);
   const dispatch = useDispatch();
   const quantityRef = useRef();
 
   const increment = () => {
-    setLocalQuantity(localQuantity + 1);
+    dispatch(
+      updateCartItem({
+        id,
+        quantity: parseInt(quantityRef.current.innerText) + 1,
+      })
+    );
   };
   const decrement = () => {
-    if (localQuantity > 1) {
-      setLocalQuantity(localQuantity - 1);
+    if (parseInt(quantityRef.current.innerText) > 1) {
+      dispatch(
+        updateCartItem({
+          id,
+          quantity: parseInt(quantityRef.current.innerText) - 1,
+        })
+      );
     }
   };
 
@@ -27,11 +36,8 @@ const CartItem = ({ id, name, price, gst, quantity }) => {
   };
 
   useEffect(() => {
-    dispatch(updateCartItem({ id, quantity: quantityRef.current.innerText }));
-  }, [localQuantity]);
-  useEffect(() => {
     dispatch(calculateNumbers());
-  }, [localQuantity]);
+  }, []);
 
   //----------------------------------------------------------------------------------------------------
 
@@ -61,7 +67,7 @@ const CartItem = ({ id, name, price, gst, quantity }) => {
             -
           </Button>
           <Text w="2em" ref={quantityRef}>
-            {localQuantity}
+            {quantity}
           </Text>
           <Button
             aria-label="Increment"

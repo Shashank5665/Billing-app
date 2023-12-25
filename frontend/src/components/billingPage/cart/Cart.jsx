@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import CartItem from "../cartItem/CartItem";
 import { Button, Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import { IoArrowBack } from "react-icons/io5";
-import "./cart.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems } from "../../../features/cartSlice";
 import { useNavigate } from "react-router-dom";
+import "./cart.css";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,9 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(fetchCartItems());
-  }, [count]);
+  }, []);
+
+  //----------------------------------------------------------------------------------------------------
 
   if (cartItems.length === 0) {
     return (

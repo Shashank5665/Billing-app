@@ -65,14 +65,29 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     cartItems: [],
+    quantity: 0,
     count: 0,
     totalAmount: 0,
-    billAmount: 0,
     gst: 0,
+    billAmount: 0,
     loading: false,
     error: null,
   },
   reducers: {
+    increment: (state, action) => {
+      const index = state.cartItems.findIndex(
+        (item) => item._id === action.payload
+      );
+      state.cartItems[index].quantity += 1;
+    },
+
+    decrement: (state, action) => {
+      const index = state.cartItems.findIndex(
+        (item) => item._id === action.payload
+      );
+      state.cartItems[index].quantity -= 1;
+    },
+
     calculateNumbers: (state, action) => {
       let count = 0;
       let totalAmount = 0;
