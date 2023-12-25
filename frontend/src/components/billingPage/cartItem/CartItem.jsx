@@ -1,34 +1,30 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Flex, Text, Grid, Button } from "@chakra-ui/react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import "./cartItem.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteCartItems, updateCartItem } from "../../../features/cartSlice";
 import { calculateNumbers } from "../../../features/cartSlice";
 
 //----------------------------------------------------------------------------------------------------
 
 const CartItem = ({ id, name, price, gst, quantity }) => {
+  const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const quantityRef = useRef();
 
-  const increment = () => {
-    dispatch(
-      updateCartItem({
-        id,
-        quantity: parseInt(quantityRef.current.innerText) + 1,
-      })
-    );
+  //----------------------------------------------------------------------------------------------------
+
+  const increment = (id) => {
+    const item = cartItems.find((item) => item._id === id);
+    const payload = { id, quantity: item.quantity + 1 };
+    dispatch(updateCartItem(payload));
   };
-  const decrement = () => {
-    if (parseInt(quantityRef.current.innerText) > 1) {
-      dispatch(
-        updateCartItem({
-          id,
-          quantity: parseInt(quantityRef.current.innerText) - 1,
-        })
-      );
-    }
+
+  const decrement = (id) => {
+    const item = cartItems.find((item) => item._id === id);
+    const payload = { id, quantity: item.quantity - 1 };
+    dispatch(updateCartItem(payload));
   };
 
   const deleteCartItem = (id) => {
@@ -60,7 +56,7 @@ const CartItem = ({ id, name, price, gst, quantity }) => {
         <Flex justifyContent="center" alignItems="center">
           <Button
             aria-label="Decrement"
-            onClick={() => decrement()}
+            onClick={() => decrement(id)}
             borderRadius="10px 0 0 10px"
             m="0.1em 1em 0.1em 1em"
           >
@@ -71,7 +67,7 @@ const CartItem = ({ id, name, price, gst, quantity }) => {
           </Text>
           <Button
             aria-label="Increment"
-            onClick={() => increment()}
+            onClick={() => increment(id)}
             borderRadius="0 10px 10px 0"
             m="0.1em 1em 0.1em 1em"
           >

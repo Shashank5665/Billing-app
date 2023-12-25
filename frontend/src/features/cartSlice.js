@@ -74,20 +74,6 @@ const cartSlice = createSlice({
     error: null,
   },
   reducers: {
-    increment: (state, action) => {
-      const index = state.cartItems.findIndex(
-        (item) => item._id === action.payload
-      );
-      state.cartItems[index].quantity += 1;
-    },
-
-    decrement: (state, action) => {
-      const index = state.cartItems.findIndex(
-        (item) => item._id === action.payload
-      );
-      state.cartItems[index].quantity -= 1;
-    },
-
     calculateNumbers: (state, action) => {
       let count = 0;
       let totalAmount = 0;
@@ -139,10 +125,10 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateCartItem.fulfilled, (state, action) => {
-        // const index = state.cartItems.find(
-        //   (item) => item._id === action.payload._id
-        // );
-        // state.cartItems[index].quantity = action.payload.quantity;
+        const item = state.cartItems.find(
+          (item) => item._id === action.payload._id
+        );
+        item.quantity = action.payload.quantity;
         state.loading = false;
       })
       .addCase(updateCartItem.rejected, (state, action) => {

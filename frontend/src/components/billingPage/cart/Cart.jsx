@@ -3,7 +3,7 @@ import CartItem from "../cartItem/CartItem";
 import { Button, Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import { IoArrowBack } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartItems } from "../../../features/cartSlice";
+import { calculateNumbers, fetchCartItems } from "../../../features/cartSlice";
 import { useNavigate } from "react-router-dom";
 import "./cart.css";
 
@@ -14,9 +14,15 @@ const Cart = () => {
     (state) => state.cart
   );
 
+  //----------------------------------------------------------------------------------------------------
+
   useEffect(() => {
     dispatch(fetchCartItems());
   }, []);
+
+  useEffect(() => {
+    dispatch(calculateNumbers());
+  }, [cartItems]);
 
   //----------------------------------------------------------------------------------------------------
 
