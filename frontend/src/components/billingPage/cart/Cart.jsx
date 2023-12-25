@@ -41,7 +41,7 @@ const Cart = () => {
           </Button>
         </Flex>
         <Flex justifyContent="center" alignItems="center" h="100vh">
-          <Heading fontFamily="poppins light">Your cart is empty</Heading>
+          <Heading fontFamily="poppins">Your cart is empty</Heading>
         </Flex>
       </>
     );
@@ -61,33 +61,31 @@ const Cart = () => {
         </Button>
       </Flex>
       <div className="cartComponent">
-        <Heading fontFamily="poppins light" m="1em 2em 1em 2em">
+        <Heading fontFamily="poppins" m="1em 2em 1em 2em">
           Your Cart
         </Heading>
-        <Grid className="innerBill" w="60%">
-          <Text fontWeight="bold" backgroundColor="#f2f7ff" m="0.2em">
-            PRODUCT
-          </Text>
-          <Text fontWeight="bold" backgroundColor="#f2f7ff" m="0.2em">
-            PRICE
-          </Text>
-          <Text fontWeight="bold" backgroundColor="#f2f7ff" m="0.2em">
-            GST
-          </Text>
-          <Text fontWeight="bold" backgroundColor="#f2f7ff" m="0.2em">
-            QTY
-          </Text>
+        <Grid
+          className="innerBill"
+          w="60%"
+          mb="0.5em"
+          pb="0.5em"
+          borderBottom="2px solid grey"
+        >
+          <Text fontWeight="bold">PRODUCT</Text>
+          <Text fontWeight="bold">PRICE</Text>
+          <Text fontWeight="bold">GST</Text>
+          <Text fontWeight="bold">QTY</Text>
         </Grid>
         {/* ---------------------------------------------------- */}
         {cartItems.map((item) => (
           <CartItem
-            key={item._id}
-            id={item._id}
-            name={item.product.name}
-            price={item.product.price}
-            gst={item.product.gst}
-            quantity={item.quantity}
-            productId={item.product._id}
+            key={item?._id}
+            id={item?._id}
+            name={item?.product.name}
+            price={item?.product.price}
+            gst={item?.product.gst}
+            quantity={item?.quantity}
+            productId={item?.product._id}
           />
         ))}
         {/* ---------------------------------------------------- */}
@@ -97,42 +95,33 @@ const Cart = () => {
       <Flex w="100%" justifyContent="center">
         <Flex
           className="amount"
-          w="60%"
+          w="50%"
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
+          mt="1em"
         >
           <Flex justifyContent="space-between" width="60%">
-            <Text fontWeight="bold" m="1em">
-              Total items :
-            </Text>
-            <Text fontWeight="bold" m="1em">
-              {count}
-            </Text>
+            <Text>Total items :</Text>
+            <Text>{count}</Text>
           </Flex>
           <Flex justifyContent="space-between" width="60%">
-            <Text fontWeight="bold" m="1em">
-              Total :
-            </Text>
-            <Text fontWeight="bold" m="1em">
+            <Text>Total :</Text>
+            <Text>
               <span>$</span>
               {totalAmount}
             </Text>
           </Flex>
           <Flex justifyContent="space-between" width="60%">
-            <Text fontWeight="bold" m="1em">
-              Gst :
-            </Text>
-            <Text fontWeight="bold" m="1em">
+            <Text>Gst :</Text>
+            <Text>
               <span>$</span>
               {gst}
             </Text>
           </Flex>
           <Flex justifyContent="space-between" width="60%">
-            <Text fontWeight="bold" m="1em">
-              Bill to pay :
-            </Text>
-            <Text fontWeight="bold" m="1em">
+            <Text as="b">Bill to pay :</Text>
+            <Text as="b">
               <span>$</span>
               {billAmount}
             </Text>

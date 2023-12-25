@@ -12,6 +12,7 @@ const CartItem = ({ id, name, price, gst, quantity }) => {
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const quantityRef = useRef();
+  const decrementRef = useRef();
 
   //----------------------------------------------------------------------------------------------------
 
@@ -59,6 +60,7 @@ const CartItem = ({ id, name, price, gst, quantity }) => {
             onClick={() => decrement(id)}
             borderRadius="10px 0 0 10px"
             m="0.1em 1em 0.1em 1em"
+            ref={decrementRef}
           >
             -
           </Button>

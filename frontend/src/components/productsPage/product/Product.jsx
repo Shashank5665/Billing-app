@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Box, Button, ButtonGroup, Heading } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
@@ -10,6 +10,7 @@ import { addCartItem } from "../../../features/cartSlice";
 
 const Product = ({ id, name, price, gst }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const addBtnRef = useRef();
   const dispatch = useDispatch();
   const handleEditOpen = () => {
     setIsEditOpen(true);
@@ -18,6 +19,8 @@ const Product = ({ id, name, price, gst }) => {
   const handleAddToCart = async (id) => {
     const payload = { productId: id };
     dispatch(addCartItem(payload));
+    addBtnRef.current.innerText = "Added";
+    addBtnRef.current.disabled = true;
   };
 
   const handleDelete = async (id) => {
@@ -27,12 +30,14 @@ const Product = ({ id, name, price, gst }) => {
   return (
     <Box m={5} display="flex" justifyContent="center" alignItems="center">
       <Box w="17em" boxShadow="xl" borderRadius="25px">
-        <Heading fontFamily="poppins light">{name}</Heading>
+        <Heading size="lg" fontFamily="poppins">
+          {name}
+        </Heading>
         <Box className="numbers">
-          <Heading size="md" fontFamily="poppins light" m="1em 0 1em 0">
+          <Heading size="md" fontFamily="poppins" m="1em 0 1em 0">
             $ {price}
           </Heading>
-          <Heading size="md" fontFamily="poppins light">
+          <Heading size="md" fontFamily="poppins">
             GST : {gst}%
           </Heading>
         </Box>
@@ -49,6 +54,7 @@ const Product = ({ id, name, price, gst }) => {
             Edit
           </Button>
           <Button
+            ref={addBtnRef}
             colorScheme="green"
             m="1.5em 0.5em 1.5em 0.5em"
             onClick={() => handleAddToCart(id)}

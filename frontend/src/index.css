@@ -1,12 +1,12 @@
 * {
-  font-family: "poppins light";
+  font-family: "poppins";
 }
 
 body {
   margin: 0;
-  font-family: "poppins light", serif;
+  font-family: "poppins", serif;
 }
 
 code {
-  font-family: "poppins light";
+  font-family: "poppins";
 }
