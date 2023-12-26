@@ -41,10 +41,10 @@ const Product = ({ id, name, price, gst }) => {
           {name}
         </Heading>
         <Box className="numbers">
-          <Heading size="md" fontFamily="poppins" m="1em 0 0.2em 0">
+          <Heading size="md" fontFamily="poppins light" m="1em 0 0.2em 0">
             $ {price}
           </Heading>
-          <Heading size="md" fontFamily="poppins">
+          <Heading size="md" fontFamily="poppins light">
             GST : {gst}%
           </Heading>
         </Box>
