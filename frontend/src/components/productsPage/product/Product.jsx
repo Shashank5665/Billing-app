@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Box, Button, ButtonGroup, Heading } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Heading, Image } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -29,12 +29,19 @@ const Product = ({ id, name, price, gst }) => {
 
   return (
     <Box m={5} display="flex" justifyContent="center" alignItems="center">
-      <Box w="17em" boxShadow="xl" borderRadius="25px">
-        <Heading size="lg" fontFamily="poppins">
+      <Box w="17em" boxShadow="2xl" borderRadius="25px">
+        {/* <Image
+          src={`https://source.unsplash.com/random/200x200?sig=${id}`}
+          alt="product"
+          borderRadius="25px 25px 0 0"
+          objectFit="cover"
+          boxSize="100%"
+        /> */}
+        <Heading size="lg" fontFamily="poppins" mt="0.5em">
           {name}
         </Heading>
         <Box className="numbers">
-          <Heading size="md" fontFamily="poppins" m="1em 0 1em 0">
+          <Heading size="md" fontFamily="poppins" m="1em 0 0.2em 0">
             $ {price}
           </Heading>
           <Heading size="md" fontFamily="poppins">

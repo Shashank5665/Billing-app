@@ -1,5 +1,6 @@
 const { mongo, default: mongoose } = require("mongoose");
 const Product = require("../models/productModel");
+const Cart = require("../models/cartItemModel");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllProducts = async (req, res) => {
@@ -61,6 +62,7 @@ const deleteProduct = async (req, res) => {
     const id = req.params.id;
     console.log(id);
     const product = await Product.findOneAndDelete({ _id: id });
+    const cart = await Cart.deleteMany({ product: id });
     res.status(200).json(product);
   } catch (error) {
     res.status(500).json({ message: "Server Error" });

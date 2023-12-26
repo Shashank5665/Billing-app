@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Flex, Text, Grid, Button } from "@chakra-ui/react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import "./cartItem.css";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCartItems, updateCartItem } from "../../../features/cartSlice";
-import { calculateNumbers } from "../../../features/cartSlice";
 
 //----------------------------------------------------------------------------------------------------
 
@@ -32,10 +31,6 @@ const CartItem = ({ id, name, price, gst, quantity }) => {
     dispatch(deleteCartItems(id));
   };
 
-  useEffect(() => {
-    dispatch(calculateNumbers());
-  }, []);
-
   //----------------------------------------------------------------------------------------------------
 
   return (
@@ -57,7 +52,7 @@ const CartItem = ({ id, name, price, gst, quantity }) => {
         <Flex justifyContent="center" alignItems="center">
           <Button
             aria-label="Decrement"
-            onClick={() => decrement(id)}
+            onClick={() => (quantity > 1 ? decrement(id) : null)}
             borderRadius="10px 0 0 10px"
             m="0.1em 1em 0.1em 1em"
             ref={decrementRef}
