@@ -4,14 +4,18 @@ import Product from "../product/Product";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../../../features/productSlice";
 
+//---------------------------------------------------------------------------------------------
+
 const ProductContainer = () => {
   const dispatch = useDispatch();
   const { search, products } = useSelector((state) => state.products);
 
+  //----------------------FUNCTIONS----------------------
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
 
+  //----------------------RETURN----------------------
   return (
     <div className="productContainer">
       {products ? (

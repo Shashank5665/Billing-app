@@ -7,6 +7,8 @@ import { calculateNumbers, fetchCartItems } from "../../../features/cartSlice";
 import { useNavigate } from "react-router-dom";
 import "./cart.css";
 
+//-
+
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -14,8 +16,7 @@ const Cart = () => {
     (state) => state.cart
   );
 
-  //----------------------------------------------------------------------------------------------------
-
+  //----------------------FUNCTIONS----------------------
   useEffect(() => {
     dispatch(fetchCartItems());
   }, []);
@@ -24,8 +25,7 @@ const Cart = () => {
     dispatch(calculateNumbers());
   }, [cartItems]);
 
-  //----------------------------------------------------------------------------------------------------
-
+  //----------------------RETURN----------------------
   if (cartItems.length === 0) {
     return (
       <>

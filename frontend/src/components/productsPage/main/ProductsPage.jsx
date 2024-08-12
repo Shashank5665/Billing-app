@@ -5,6 +5,8 @@ import { Heading } from "@chakra-ui/react";
 import "./main.css";
 import Search from "../search/Search";
 
+//---------------------------------------------------------------------------------------------
+
 const Main = () => {
   return (
     <div className="mainProductPage">

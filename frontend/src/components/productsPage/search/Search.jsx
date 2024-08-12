@@ -4,14 +4,18 @@ import "./search.css";
 import { useDispatch } from "react-redux";
 import { searchProduct } from "../../../features/productSlice";
 
+//---------------------------------------------------------------------------------------------
+
 const Search = () => {
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
+  //----------------------FUNCTIONS----------------------
   useEffect(() => {
     dispatch(searchProduct(search));
   }, [search]);
 
+  //----------------------RETURN----------------------
   return (
     <Box className="searchContainer">
       <Input

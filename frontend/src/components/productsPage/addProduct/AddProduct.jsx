@@ -29,6 +29,7 @@ const AddProduct = () => {
   const priceRef = useRef();
   const gstRef = useRef();
 
+  //----------------------FUNCTIONS----------------------
   const handleAdd = () => {
     const product = {};
     product.name = nameRef.current.value;
@@ -38,6 +39,7 @@ const AddProduct = () => {
     setIsOpen(false);
   };
 
+  //----------------------RETURN----------------------
   return (
     <div className="addProductContainer">
       <Button
@@ -58,7 +60,6 @@ const AddProduct = () => {
         <IoIosAddCircle fontSize="1.5em" />
         Add New product
       </Button>
-
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <ModalOverlay />
         <ModalContent>
@@ -78,7 +79,6 @@ const AddProduct = () => {
               <Input type="number" ref={gstRef} />
             </FormControl>
           </ModalBody>
-
           <ModalFooter>
             <Button colorScheme="blue" mr={3} onClick={handleAdd}>
               Add

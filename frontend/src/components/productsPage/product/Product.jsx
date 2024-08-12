@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Box, Button, ButtonGroup, Heading, Image } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Heading } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -8,10 +8,14 @@ import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../../features/productSlice";
 import { addCartItem } from "../../../features/cartSlice";
 
+//---------------------------------------------------------------------------------------------
+
 const Product = ({ id, name, price, gst }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const addBtnRef = useRef();
   const dispatch = useDispatch();
+
+  //-----------------FUNCTIONS---------------------
   const handleEditOpen = () => {
     setIsEditOpen(true);
   };
@@ -27,6 +31,7 @@ const Product = ({ id, name, price, gst }) => {
     dispatch(deleteProduct(id));
   };
 
+  //-----------------RETURN---------------------
   return (
     <Box m={5} display="flex" justifyContent="center" alignItems="center">
       <Box w="17em" boxShadow="2xl" borderRadius="25px">

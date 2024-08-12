@@ -15,6 +15,8 @@ import {
 import { useDispatch } from "react-redux";
 import { updateProduct } from "../../../features/productSlice";
 
+//---------------------------------------------------------------------------------------------
+
 const EditProduct = ({
   id,
   isOpen,
@@ -28,11 +30,13 @@ const EditProduct = ({
   const [price, setLocalPrice] = useState(initialPrice);
   const [gst, setLocalGst] = useState(initialGst);
 
+  //----------------------FUNCTIONS----------------------
   const handleUpdate = () => {
     dispatch(updateProduct({ id, name, price, gst }));
     onClose();
   };
 
+  //----------------------RETURN----------------------
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
